@@ -126,7 +126,7 @@ export default function AviatorGame() {
                 {multiplier.toFixed(2)}x
               </div>
               {gameState === 'crashed' && (
-                <div className="text-2xl text-red-400 font-bold mt-4">CRASHED!</div>
+                <div className="text-red-700 text-3xl font-extrabold bg-black m-20 p-1 rounded-full">Exploded !</div>
               )}
             </div>
           </div>
