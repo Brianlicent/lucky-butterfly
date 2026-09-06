@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Plane } from 'lucide-react';
 
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  opacity: number;
+}
+
 interface Bet {
   amount: number;
   multiplier: number;
@@ -16,6 +23,8 @@ export default function AviatorGame() {
   const [crashPoint, setCrashPoint] = useState(0);
   const gameLoopRef = useRef<NodeJS.Timeout | null>(null);
   const planePositionRef = useRef(0);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const particleIdRef = useRef(0);
 
   // Generate random crash point
   const generateCrashPoint = () => {
@@ -46,6 +55,23 @@ export default function AviatorGame() {
       setMultiplier(currentMultiplier);
       planePositionRef.current = Math.min(currentMultiplier * 20, 90);
 
+      // Create particles for dust trail
+      const butterflyX = planePositionRef.current;
+      const butterflyY = 100 - currentMultiplier * 12; // Start from bottom, move up
+      
+      setParticles((prev) => {
+        const newParticles = [
+          ...prev.map((p) => ({ ...p, opacity: p.opacity - 0.05 })),
+          {
+            id: particleIdRef.current++,
+            x: butterflyX,
+            y: butterflyY,
+            opacity: 1,
+          },
+        ].filter((p) => p.opacity > 0);
+        return newParticles;
+      });
+
       // Check if crashed
       if (currentMultiplier >= 1 + crashPoint) {
         setGameState('crashed');
@@ -53,6 +79,7 @@ export default function AviatorGame() {
           { ...prev[0], status: 'lost', multiplier: currentMultiplier },
           ...prev.slice(1),
         ]);
+        setParticles([]);
         if (gameLoopRef.current) clearInterval(gameLoopRef.current);
       }
     }, 50);
@@ -79,6 +106,7 @@ export default function AviatorGame() {
     setGameState('idle');
     setMultiplier(1.0);
     planePositionRef.current = 0;
+    setParticles([]);
   };
 
   useEffect(() => {
@@ -100,20 +128,35 @@ export default function AviatorGame() {
         </div>
 
         {/* Game Arena */}
-        <div className="relative h-64 flex items-center justify-center mb-8">
-          {/* Plane */}
+        <div className="relative h-80 flex items-center justify-center mb-8 overflow-hidden">
+          {/* Dust Trail Particles */}
+          {particles.map((particle) => (
+            <div
+              key={particle.id}
+              className="absolute pointer-events-none"
+              style={{
+                left: `${particle.x}%`,
+                top: `${particle.y}%`,
+                opacity: particle.opacity,
+              }}
+            >
+              <div className="w-3 h-3 bg-gradient-to-r from-yellow-300 to-yellow-100 rounded-full blur-sm shadow-lg" />
+            </div>
+          ))}
+
+          {/* Butterfly */}
           <div
             className="absolute transition-all duration-100 z-10"
             style={{
               left: `${planePositionRef.current}%`,
-              top: '20%',
+              top: `${100 - multiplier * 12}%`,
             }}
           >
-            <div className="text-5xl">🦋</div>
+            <div className="text-5xl animate-pulse">🦋</div>
           </div>
 
           {/* Multiplier Display */}
-          <div className="text-center">
+          <div className="text-center absolute">
             <div className="text-6xl font-bold text-white drop-shadow-lg rounded-lg">
               {multiplier.toFixed(2)}x
             </div>
