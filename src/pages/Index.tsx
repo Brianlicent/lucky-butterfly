@@ -28,7 +28,7 @@ export default function AviatorGame() {
 
   // Generate random crash point
   const generateCrashPoint = () => {
-    return Math.random() * 0.95 + 0.05; // Crash between 1.05x and 2.0x
+    return Math.random() * 1.2 + 0.05; // Crash between 1.05x and 2.25x (reaches up to 25x)
   };
 
   // Start game
@@ -57,7 +57,7 @@ export default function AviatorGame() {
 
       // Create particles for dust trail
       const butterflyX = planePositionRef.current;
-      const butterflyY = 100 - currentMultiplier * 12; // Start from bottom, move up
+      const butterflyY = 100 - currentMultiplier * 3.5; // Start from bottom, move up higher
       
       setParticles((prev) => {
         const newParticles = [
@@ -149,7 +149,7 @@ export default function AviatorGame() {
             className="absolute transition-all duration-100 z-10"
             style={{
               left: `${planePositionRef.current}%`,
-              top: `${100 - multiplier * 12}%`,
+              top: `${100 - multiplier * 3.5}%`,
             }}
           >
             <div className="text-9xl butterfly-flap">🦋</div>
