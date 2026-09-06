@@ -109,7 +109,7 @@ export default function AviatorGame() {
               top: '20%',
             }}
           >
-            <div className="text-5xl">🚀</div>
+            <div className="text-5xl">🦋</div>
           </div>
 
           {/* Multiplier Display */}
