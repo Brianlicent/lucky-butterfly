@@ -152,7 +152,7 @@ export default function AviatorGame() {
               top: `${100 - multiplier * 12}%`,
             }}
           >
-            <div className="text-5xl butterfly-flap">🦋</div>
+            <div className="text-9xl butterfly-flap">🦋</div>
           </div>
 
           {/* Multiplier Display */}
