@@ -28,7 +28,7 @@ export default function AviatorGame() {
 
   // Generate random crash point
   const generateCrashPoint = () => {
-    return Math.random() * 0.08 + 0.02; // Crash between 1.02x and 1.08x
+    return Math.random() * 0.95 + 0.05; // Crash between 1.05x and 2.0x
   };
 
   // Start game
@@ -53,7 +53,7 @@ export default function AviatorGame() {
     gameLoopRef.current = setInterval(() => {
       currentMultiplier += crashPoint;
       setMultiplier(currentMultiplier);
-      planePositionRef.current = Math.min(currentMultiplier * 20, 90);
+      planePositionRef.current = Math.min((currentMultiplier - 1) * 5, 95);
 
       // Create particles for dust trail
       const butterflyX = planePositionRef.current;
