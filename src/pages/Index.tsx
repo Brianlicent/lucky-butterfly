@@ -100,14 +100,7 @@ export default function AviatorGame() {
         </div>
 
         {/* Game Arena */}
-        <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-8 mb-8 relative h-64 overflow-hidden shadow-2xl">
-          {/* Sky background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-300 to-blue-400 rounded-lg" />
-
-          {/* Clouds */}
-          <div className="absolute top-4 left-10 text-6xl opacity-40">☁️</div>
-          <div className="absolute top-20 right-20 text-5xl opacity-30">☁️</div>
-
+        <div className="relative h-64 flex items-center justify-center mb-8">
           {/* Plane */}
           <div
             className="absolute transition-all duration-100 z-10"
@@ -120,19 +113,16 @@ export default function AviatorGame() {
           </div>
 
           {/* Multiplier Display */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-6xl font-bold text-white drop-shadow-lg">
-                {multiplier.toFixed(2)}x
-              </div>
-              {gameState === 'crashed' && (
-                <div className="text-red-700 text-3xl font-extrabold bg-black m-20 p-1 rounded-full">Exploded !</div>
-              )}
+          <div className="text-center">
+            <div className="text-6xl font-bold text-white drop-shadow-lg">
+              {multiplier.toFixed(2)}x
             </div>
+            {gameState === 'crashed' && (
+              <div className="text-5xl font-black text-red-500 mt-4 animate-bounce">
+                EXPLODED
+              </div>
+            )}
           </div>
-
-          {/* Ground */}
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-green-700 rounded-b-lg" />
         </div>
 
         {/* Controls */}
