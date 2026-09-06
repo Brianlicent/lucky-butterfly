@@ -114,7 +114,7 @@ export default function AviatorGame() {
 
           {/* Multiplier Display */}
           <div className="text-center">
-            <div className="text-6xl font-bold text-white drop-shadow-lg">
+            <div className="text-6xl font-bold text-white drop-shadow-lg rounded-lg">
               {multiplier.toFixed(2)}x
             </div>
             {gameState === 'crashed' && (
